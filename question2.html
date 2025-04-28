@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <link rel="stylesheet" href="wts.css" />
+  <link rel="icon" type="image/x-icon" href="Logo_last.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400&display=swap"
+    rel="stylesheet"
+  />
+  <title>Activity 3</title>
+  <style>
+    .imgdiv {
+      position: relative;
+    }
+    .input-container {
+      position: absolute;
+      bottom: 13%;
+      left: 47%;
+      transform: translateX(-50%);
+      width: 80%;
+    }
+    
+    .sentence-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 95%;
+      max-width: 700px;
+      margin-bottom: 1%;
+      font-size: 2vw;
+      font-weight: 550;
+    }
+    
+    .sentence-container span {
+      padding: 0.5%;
+      text-align: center;
+      margin-right: 0.5%;
+    }
+    
+    .sentence-container input {
+      font-size: 2vw;
+      font-weight: 550;
+      border: 2px solid black;
+      text-align: center;
+      margin: 0 0.5%;
+      padding: 0.3% 0.5%;
+      width: 80px;
+    }
+    
+    .sentence-container input.invalid {
+      border-color: red;
+    }
+    
+    .answers {
+      margin-top: 2%;
+    }
+    
+    .question {
+      position: absolute;
+      top: 5%;
+      left: 48%;
+      transform: translate(-50%, 0);
+      width: 75%;
+      color: black;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 5px;
+    }
+    
+    .smallbtn.active,
+    .smallbtn.default {
+      background-color: #f56c6c;
+      color: #ffffff;
+    }
+    
+    #questiondiv {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+    }
+    
+    .messageContainer {
+      position: absolute;
+      bottom: 5%;
+      left: 15%;
+      /* transform: translateX(-50%); */
+      text-align: center;
+      z-index: 10;
+      color: white;
+    }
+    
+    #secondImg {
+      position: absolute;
+      top: 25%;
+      left: 30%;
+    }
+    
+    .input1 {
+      background-color: aquamarine;
+    }
+    
+    .input2 {
+      background-color: rgb(248, 169, 132);
+    }
+    
+    .input3 {
+      background-color: rgb(249, 246, 159);
+    }
+    
+    #submitbtn {
+      position: absolute;
+      left: 80%;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      bottom: 5%;
+    }
+    
+    #nextbtn {
+      position: absolute;
+      left: 80%;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      bottom: 5%;
+    }
+    
+    .btn {
+      font-family: fantasy;
+      position: relative;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .questionButtons {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .smallbtn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ddd;
+      cursor: pointer;
+      margin: 2px;
+    }
+    
+    .flip {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <audio id="cheers">
+    <source src="cheers.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="sound" src="points.mp3"></audio>
+  <audio id="fail" src="fail.mp3"></audio>
+  <div
+    class="header"
+    style="
+      width: auto;
+      box-shadow: 5px 5px 10px rgb(0, 0, 0);
+      padding-bottom: 10px;
+    "
+  >
+    <img
+      src="Logo.png"
+      width="5%"
+      style="float: left; margin-top: 25px; text-align: left"
+      class="img-responsive"
+    />
+    <span>
+      <img
+        src="header.png"
+        width="30%"
+        height=""
+        class="img-responsive"
+        style="text-align: left"
+      />
+    </span>
+  </div>
+  <br />
+  <center>
+    <h1 id="heading">Input and Output Tables</h1>
+    
+    <div class="maindiv container">
+      <div id="questionButtons" class="questionButtons"></div>
+      <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 imgdiv">
+        <div id="question" class="question"></div>
+        <img id="math_ques" src="question_img1.jpg" width="100%" height="100%" />
+        <img id="secondImg" src="" style="width: 35%;height: 48%;" /> 
+        <div class="input-container">
+          <div id="sentence-container" class="sentence-container">
+            <!-- The sentence with inputs will be dynamically inserted here -->
+          </div>
+          
+        </div>
+        <div style="display: flex;">
+          <div class="messageContainer mt-2">
+            <p id="message" class="message"></p>
+          </div>
+          <div class="btn-container">
+            <button id="submitbtn" class="btn btn-lg btn-primary">Submit</button>
+            <button id="nextbtn" class="btn btn-lg btn-primary" style="display: none;" onclick="newques()">Next</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+ 
+    <script>
+      // Sample questions data (normally would be loaded from questions.json)
+      let questions = [
+        {
+          "questionNo": 1,
+          "question": "The traveller gives them water bottles. They need to fill in the blank boxes with your help to complete his first challenge.",
+          "options": ["There are", "", "water bottles in each group"],
+          "answers": ["There are", "8", "water bottles in each group"],
+          "secondImg": "./images/1.png"
+        },
+        {
+          "questionNo": 2,
+          "question": "The traveler hands over some desert fruits. Help them by filling in the blanks.",
+          "options": ["There are", "", "fruits in each group"],
+          "answers": ["There are", "4", "fruitsin each group"],
+          "secondImg": "./images/2.png"
+        },
+        {
+          "questionNo": 3,
+          "question": "They find maps rolled up in tubes. The traveler asks them to divide them equally. Help her by filling in the blanks.",
+          "options": ["There are", "", "maps in each group"],
+          "answers": ["There are", "7", "maps in each group"],
+          "secondImg": "./images/3.png"
+        },
+        {
+          "questionNo": 4,
+          "question": "The traveler shows them a pouch of shiny stones. Fill in the empty blanks to make the groups.",
+          "options": ["There are", "", "pouches in each group"],
+          "answers": ["There are", "10", "pouches in each group"],
+          "secondImg": "./images/4.png"
+        },
+        {
+          "questionNo": 5,
+          "question": "Jenny finds a box of walkie-talkies. The traveler wants them placed evenly into supply kits. Help them by filling the missing numbers in the blanks.",
+          "options": ["There are", "", "walkie talkies in each group"],
+          "answers": ["There are", "9", "walkie talkies in each group"],
+          "secondImg": "./images/5.png"
+        },
+        {
+          "questionNo": 6,
+          "question": "The traveler showed them a picture of hats. Fill in the blanks to complete the division statement.",
+          "options": ["There are", "", "hats in each group"],
+          "answers": ["There are", "8", "hats in each group"],
+          "secondImg": "./images/6.png"
+        }
+      ];
+      
+
+      let currentQuestion = 0;
+      let inputCount = 0;
+
+      async function fetchQuestions() {
+        try {
+          const response = await fetch('questions2.json');
+          if (!response.ok) {
+            throw new Error('Failed to load questions');
+          }
+          return await response.json();
+        } catch (error) {
+          console.error('Error loading questions:', error);
+          // We'll use the hardcoded questions as fallback
+          return questions;
+        }
+      }
+
+      function loadQuestion() {
+        const questionElement = document.getElementById('question');
+        const questionImage = document.getElementById('math_ques');
+        const secondImgElement = document.getElementById('secondImg');
+        const sentenceContainer = document.getElementById('sentence-container');
+        const current = questions[currentQuestion];
+
+        // Set question text and images
+        questionElement.innerHTML = current.question;
+        questionImage.src = "question_img1.jpg";
+
+        if (current.secondImg) {
+          secondImgElement.src = current.secondImg;
+          secondImgElement.style.display = 'block';
+        } else {
+          secondImgElement.style.display = 'none';
+        }
+
+        // Clear previous sentence and reset input count
+        sentenceContainer.innerHTML = '';
+        inputCount = 0;
+
+        // Create the sentence with mix of spans and inputs
+        for (let i = 0; i < current.options.length; i++) {
+          if (current.options[i].trim() !== "") {
+            // Create a span for prefilled text
+            const span = document.createElement('span');
+            span.textContent = current.options[i];
+            span.style.backgroundColor='white';
+            span.style.padding= '1%'
+            span.style.borderRadius= '2%'
+            sentenceContainer.appendChild(span);
+          } else {
+            // Create an input for user to fill
+            inputCount++;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = `input${inputCount}`;
+            input.className = `form-control input${inputCount}`;
+            
+            // Add appropriate background colors
+            if (inputCount === 1) input.style.backgroundColor = 'white';
+            else if (inputCount === 2) input.style.backgroundColor = 'rgb(248, 169, 132)';
+            else if (inputCount === 3) input.style.backgroundColor = 'rgb(249, 246, 159)';
+            
+            sentenceContainer.appendChild(input);
+          }
+        }
+
+        document.getElementById('message').innerHTML = '';
+        document.getElementById('nextbtn').style.display = 'none';
+        document.getElementById('submitbtn').style.display = 'inline-block';
+      }
+
+      function checkAnswers() {
+        const current = questions[currentQuestion];
+        let allCorrect = true;
+        let inputIndex = 0;
+        
+        // Iterate through options to find the empty ones that need user input
+        for (let i = 0; i < current.options.length; i++) {
+          if (current.options[i].trim() === "") {
+            inputIndex++;
+            const input = document.getElementById(`input${inputIndex}`);
+            
+            // Compare user input with expected answer
+            if (input.value.trim() === current.answers[i]) {
+              input.classList.remove('invalid');
+            } else {
+              input.classList.add('invalid');
+              allCorrect = false;
+            }
+          }
+        }
+
+        if (allCorrect) {
+          document.getElementById('message').innerHTML = "Good Job! <div class='flip'>&#128512</div>";
+          document.getElementById('nextbtn').style.display = 'inline-block';
+          document.getElementById('submitbtn').style.display = 'none';
+          document.getElementById('sound').play();
+        } else {
+          document.getElementById('message').innerHTML = 'Try Again! <div class="flip">😎</div>';
+          document.getElementById('fail').play();
+        }
+      }
+
+      function newques() {
+        if (currentQuestion === questions.length - 1) {
+          window.location.href='question1.html';
+        } else {
+          currentQuestion++;
+          loadQuestion();
+          const buttons = document.querySelectorAll('.smallbtn');
+          buttons.forEach((button, index) => {
+            if (index === currentQuestion) {
+              button.classList.add('active');
+            } else {
+              button.classList.remove('active');
+            }
+          });
+        }
+      }
+
+      function abc(x) {
+        document.getElementById('heading').innerHTML = 'Input and Output Tables';
+        document.getElementById('math_ques').src = 'question_img1.jpg';
+        currentQuestion = x - 1;
+        loadQuestion();
+        const buttons = document.querySelectorAll('.smallbtn');
+        buttons.forEach(button => button.classList.remove('active'));
+        buttons[x - 1].classList.add('active');
+      }
+
+      window.onload = async function () {
+        try {
+          const loadedQuestions = await fetchQuestions();
+          if (loadedQuestions && loadedQuestions.length > 0) {
+            questions = loadedQuestions;
+          }
+        } catch (error) {
+          console.error("Error loading questions, using fallback:", error);
+        }
+        
+        loadQuestion();
+
+        const questionButtonsContainer = document.getElementById('questionButtons');
+        questions.forEach((_, index) => {
+          const button = document.createElement('button');
+          button.textContent = `Q${index + 6}`;
+          button.classList.add('smallbtn');
+          button.onclick = () => abc(index + 1);
+
+          if (index === 0) {
+            button.classList.add('active');
+          }
+
+          questionButtonsContainer.appendChild(button);
+        });
+
+        document.getElementById('submitbtn').onclick = () => {
+          checkAnswers();
+        };
+      };
+    </script>
+  </center>
+</body>
+</html>

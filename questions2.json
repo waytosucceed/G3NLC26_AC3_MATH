@@ -1,0 +1,24 @@
+[
+    {
+      "questionNo": 1,
+      "question": "This input/output table shows multiplication. Find the rule and type the correct number in the blank.",
+      "options": ["Rule = ×", ""],
+      "answers": ["Rule = ×", "3"],
+      "secondImg": "./images/1.png"
+    },
+    {
+      "questionNo": 2,
+      "question": "Liam forgot the rule he used. Can you find the rule and fill in the blank ?",
+      "options": ["Rule = ×", ""],
+      "answers": ["Rule = ×", "4"],
+      "secondImg": "./images/2.png"
+    },
+    {
+      "questionNo": 3,
+      "question": "Sofia’s numbers don’t match. Can you spot her rule and type the correct number in the blank.",
+      "options": ["Rule = ×", ""],
+      "answers": ["Rule = ×", "2"],
+      "secondImg": "./images/3.png"
+    }
+  ]
+  
